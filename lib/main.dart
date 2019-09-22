@@ -19,13 +19,13 @@ class MyAppState extends State {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SL Duty Free Allowance',
+      title: 'NT',
       onGenerateRoute: router.generateRoute,
       initialRoute: LoginViewRoute,
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: MyHomePage(title: 'SL Duty Free Allowance'),
+      home: MyHomePage(title: 'NT'),
     );
   }
 }
