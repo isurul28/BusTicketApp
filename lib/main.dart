@@ -23,7 +23,7 @@ class MyAppState extends State {
       onGenerateRoute: router.generateRoute,
       initialRoute: LoginViewRoute,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.green,
       ),
       home: MyHomePage(title: 'NT'),
     );
