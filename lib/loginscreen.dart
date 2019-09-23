@@ -132,7 +132,7 @@ class _LoginScreen3State extends State<LoginScreen3>
       child: new Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top: 250.0),
+            padding: EdgeInsets.only(top: 150.0),
             child: Center(
               child: Icon(
                 Icons.airport_shuttle,
@@ -339,7 +339,7 @@ class _LoginScreen3State extends State<LoginScreen3>
                     "PASSWORD",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.redAccent,
+                      color: Colors.white,
                       fontSize: 15.0,
                     ),
                   ),
@@ -354,7 +354,7 @@ class _LoginScreen3State extends State<LoginScreen3>
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                    color: Colors.redAccent,
+                    color: Colors.white,
                     width: 0.5,
                     style: BorderStyle.solid),
               ),
