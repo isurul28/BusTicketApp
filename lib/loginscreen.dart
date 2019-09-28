@@ -1,4 +1,6 @@
+import 'package:bus_app/database.dart';
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 
 class LoginScreen3 extends StatefulWidget {
   @override
@@ -72,8 +74,14 @@ class _LoginScreen3State extends State<LoginScreen3>
   }
   */
 
+  String email;
+  String password;
+  String confirmPassword;
+  Database database;
+
   @override
   void initState() {
+    database = new Database(context);
     super.initState();
 
     //The code is commented because instead of manual scrolling with animation,
@@ -314,12 +322,14 @@ class _LoginScreen3State extends State<LoginScreen3>
               children: <Widget>[
                 new Expanded(
                   child: TextField(
-                     obscureText: true,
-                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Colors.white70
+                    ),
+                     onChanged: (data){email = data.toString();},
+                      textAlign: TextAlign.left,
                       decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'rose@gmail.com',
-                      
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                   ),
@@ -366,7 +376,11 @@ class _LoginScreen3State extends State<LoginScreen3>
               children: <Widget>[
                 new Expanded(
                   child: TextField(
+                    style: TextStyle(
+                      color: Colors.white70
+                    ),
                     obscureText: true,
+                    onChanged: (data){password = password.toString();},
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -395,7 +409,7 @@ class _LoginScreen3State extends State<LoginScreen3>
                       borderRadius: new BorderRadius.circular(30.0),
                     ),
                     color: Colors.redAccent,
-                    onPressed: () => {},
+                    onPressed: _login,
                     child: new Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 20.0,
@@ -494,10 +508,11 @@ class _LoginScreen3State extends State<LoginScreen3>
                       color: Colors.white
                     ),
                     obscureText: false,
+                    onChanged: (text){email = text.toString();},
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'simba@gmail.com',
+                      hintText: 'email@email.com',
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                     keyboardType: TextInputType.emailAddress,
@@ -550,6 +565,7 @@ class _LoginScreen3State extends State<LoginScreen3>
                     ),
                     obscureText: true,
                     textAlign: TextAlign.left,
+                    onChanged: (text){password = text.toString();},
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: '*********',
@@ -605,6 +621,7 @@ class _LoginScreen3State extends State<LoginScreen3>
                       color: Colors.white
                     ),
                     obscureText: true,
+                    onChanged: (text){confirmPassword = text.toString();},
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -633,7 +650,7 @@ class _LoginScreen3State extends State<LoginScreen3>
                       borderRadius: new BorderRadius.circular(30.0),
                     ),
                     color: Colors.green,
-                    onPressed: () => {},
+                    onPressed: _signup,
                     child: new Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 20.0,
@@ -681,6 +698,42 @@ class _LoginScreen3State extends State<LoginScreen3>
       duration: Duration(milliseconds: 800),
       curve: Curves.bounceOut,
     );
+  }
+
+  _signup(){
+    email = email.trim();
+    if(!RegExp(r"[a-zA-z\_\.]+\@[a-zA-z\_\.]+\.[a-zA-z\_\.]+").hasMatch(email) || email == ""){
+    Toast.show("Wrong Email", context,duration: Toast.LENGTH_LONG,gravity: Toast.BOTTOM);
+    return;
+    }
+    if(password.length < 6){
+      Toast.show("Passwords must be longer than 6 characters", context,duration: Toast.LENGTH_LONG,gravity: Toast.BOTTOM);
+      return;
+    }
+    if(password == confirmPassword){
+      database.createUser(email, password).then((res){
+        if(res){
+          Toast.show("Register Sucessfull", context,duration: Toast.LENGTH_LONG,gravity: Toast.BOTTOM);
+          password = "";
+          email = "";
+          gotoLogin();
+        }else{
+          Toast.show("Register Failed", context,duration: Toast.LENGTH_LONG,gravity: Toast.BOTTOM);
+        }
+      });
+    }else{
+      Toast.show("Passwords Do not match", context,duration: Toast.LENGTH_LONG,gravity: Toast.BOTTOM);
+    }
+  }
+  _login(){
+    email = email.trim();
+    database.login(email, password).then((res){
+      if(res){
+        Toast.show("Logedin", context,duration: Toast.LENGTH_LONG,gravity: Toast.BOTTOM);
+      }else{
+        Toast.show("Login Failed", context,duration: Toast.LENGTH_LONG,gravity: Toast.BOTTOM);
+      }
+    });
   }
 
   PageController _controller = new PageController(initialPage: 1, viewportFraction: 1.0);
