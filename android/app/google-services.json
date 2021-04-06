@@ -8,20 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:850686102896:android:0d5f72702be05cd82a13b5",
+        "mobilesdk_app_id": "removed",
         "android_client_info": {
           "package_name": "com.example.bus_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "850686102896-me77a5b7jm3botege8skjdjon35tu4ns.apps.googleusercontent.com",
+          "client_id": "850686102896",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA6PGVeLCkpwVIWkrqtr80POdz7IZwZSvo"
+          "current_key": "removed"
         }
       ],
       "services": {
